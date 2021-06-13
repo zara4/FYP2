@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Naiki</title>
+	<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-storage.js"></script>
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/icomoon.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/superfish.css">
+	<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body onload="getNotifications()">
+		<div id="fh5co-wrapper">
+		<div id="fh5co-page">
+		<div class="header-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-sm-6 text-left fh5co-link">
+						<a href="#">FAQ</a>
+						<a href="#">Forum</a>
+						<a href="contact.html">Complaint Cell</a>
+					</div>
+					<div class="col-md-6 col-sm-6 text-right fh5co-social">
+						<a href="#" class="grow"><i class="icon-facebook2"></i></a>
+						<a href="#" class="grow"><i class="icon-twitter2"></i></a>
+						<a href="#" class="grow"><i class="icon-instagram2"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<header id="fh5co-header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html">NAIKI</a></h1>
+					<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="about.html">About</a></li>
+							<li><a href="donation.html">Donation</a></li>
+							<li><a href="nearbyusers.html">Nearby Users</a></li>
+							<li><a href="profile.html" >User Profile</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+	         <div class="container">
+				<div class="row">
+						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<br><br>
+						    <h3 style="color:orangered;" >Virtual Wall of Kindness </h3>
+							<h2>Love. Donate. Share</h2>
+							<p>If you’re not making someone else’s life better, then you’re wasting your time. Your life
+								will become better by making other lives better.</p>
+						</div>
+					</div>
+				<p id="notify"></p>
+            </div>
+            <footer>
+				<div id="footer">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-6 col-md-offset-3 text-center">
+								<p class="fh5co-social-icons">
+									<a href="#"><i class="icon-twitter2"></i></a>
+									<a href="#"><i class="icon-facebook2"></i></a>
+									<a href="#"><i class="icon-instagram"></i></a>
+									<a href="#"><i class="icon-dribbble2"></i></a>
+									<a href="#"><i class="icon-youtube"></i></a>
+								</p>
+								<p><strong>Copyright 2021 @ Naiki.ORG - All Rights Reserved.</strong><br><i>Designed by
+										Foundation University</i> </p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+	<script>	
+	var firebaseConfig = {
+    apiKey: "AIzaSyDp48jRaC7z8wGIQgsf79xgAbe95MGfzYs",
+    authDomain: "naiki-b125a.firebaseapp.com",
+    databaseURL: "https://naiki-b125a-default-rtdb.firebaseio.com",
+    projectId: "naiki-b125a",
+    storageBucket: "naiki-b125a.appspot.com",
+    messagingSenderId: "801406744708",
+    appId: "1:801406744708:web:cb16690ad33801f06e2ad1",
+    measurementId: "G-M9W4N24FJ5"
+  };
+    
+function getNotifications(){
+	let data = ' ';
+	firebase.initializeApp(firebaseConfig);
+    var databaseRef = firebase.database();
+    var userref = databaseRef.ref('donationpost')
+  userref.on("value", function(snapshot) {
+   snapshot.forEach(
+	   function child(childSnapShot){
+		var name= childSnapShot.val().name;
+		var title= childSnapShot.val().title;
+		var desc= childSnapShot.val().description;
+		var date= childSnapShot.val().date;
+		var image = childSnapShot.val().image;
+		data += `<div class="col-lg-4 col-md-4 col-sm-6">
+                            <div class="fh5co-blog ">
+                                <a ><img class="img-responsive" src="${image}" alt=""></a>
+                                <div class="blog-text">
+                                    <div class="prod-title">
+                                        <h3><a href="" #><b>${title}</b></a></h3>
+                                        <span class="posted_by">Posted by ${name}</span>
+                                        <span class="comment">${date}</span>
+                                        <p>${desc}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>`
+	   }
+   );
+   document.getElementById("notify").innerHTML = data;
+}, function (error) {
+   console.log("Error: " + error.code);
+});
+}
+	</script>
+    </body>
+</html>

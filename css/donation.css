@@ -1,0 +1,38 @@
+
+body {
+  font-size: 63px;
+  line-height: 1.8;
+  font-weight: 400;
+  font-family: Poppins; }
+
+.container {
+  width: 1000px;
+  margin: auto;
+  position: relative;
+  text-align: center;
+  color: white;
+  }
+  
+.bottom-left {
+  position: absolute;
+  bottom: 220px;
+  left: 150px;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 220px;
+  right: 180px;
+}
+
+.main {
+  background: black;
+  padding: 115px 0; }
+
+#img{
+	width: 49%;
+	height: 500px;
+	border-radius: 20px;
+	opacity: 0.7;
+	
+}

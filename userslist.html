@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Naiki</title>
+	<script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.5/firebase-storage.js"></script>
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/icomoon.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/superfish.css">
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		.imgcon  {
+			height:100px;
+			width: 100px;
+		}
+		button {
+  background: hsla(0, 100%, 50%, 0.678);
+  box-shadow: 0px 0px 0px transparent;
+  color:snow;
+  border: 0px solid transparent;
+  border-radius: 10%;
+}
+
+button:hover {
+  background: transparent;
+  box-shadow: 0px 0px 0px transparent;
+  color:black;
+  border-color: black;
+  border: 1px black solid;
+  text-shadow: 0px 0px 0px transparent;
+}
+		
+	</style>
+	</head>
+	<body onload="getNotifications()">
+		<div id="fh5co-wrapper">
+		<div id="fh5co-page">
+		<div class="header-top">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-sm-6 text-left fh5co-link">
+						<a href="#">FAQ</a>
+						<a href="#">Forum</a>
+						<a href="contact.html">Complaint Cell</a>
+					</div>
+					<div class="col-md-6 col-sm-6 text-right fh5co-social">
+						<a href="#" class="grow"><i class="icon-facebook2"></i></a>
+						<a href="#" class="grow"><i class="icon-twitter2"></i></a>
+						<a href="#" class="grow"><i class="icon-instagram2"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<header id="fh5co-header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle dark"><i></i></a>
+					<h1 id="fh5co-logo"><a href="index.html">Admin Panel</a></h1>
+					<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+							<li><a href="adminpanel.html">Home</a></li>
+							<li><a href="complaint.html">Complaint</a></li>
+							<li><a href="userslist.html">Users</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</header>
+	         <div class="container">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 text-center heading-section animate-box">
+							<br><br>
+							<h2>List of all users</h2>
+						</div>
+					</div>
+				<p id="notify"></p>
+            </div>
+	<script>	
+	var firebaseConfig = {
+    apiKey: "AIzaSyDp48jRaC7z8wGIQgsf79xgAbe95MGfzYs",
+    authDomain: "naiki-b125a.firebaseapp.com",
+    databaseURL: "https://naiki-b125a-default-rtdb.firebaseio.com",
+    projectId: "naiki-b125a",
+    storageBucket: "naiki-b125a.appspot.com",
+    messagingSenderId: "801406744708",
+    appId: "1:801406744708:web:cb16690ad33801f06e2ad1",
+    measurementId: "G-M9W4N24FJ5"
+  };
+var id;    
+function getNotifications(){
+	let data = ' ';
+	firebase.initializeApp(firebaseConfig);
+    var databaseRef = firebase.database();
+    var userref = databaseRef.ref('users')
+  userref.on("value", function(snapshot) {
+   snapshot.forEach(
+	   function child(childSnapShot){
+		var name= childSnapShot.val().name;
+		var gender= childSnapShot.val().gender;
+		var cnic= childSnapShot.val().cnic;
+		var address= childSnapShot.val().address;
+		var country= childSnapShot.val().country;
+		var city= childSnapShot.val().city;
+		var phone= childSnapShot.val().phone;
+		var email = childSnapShot.val().email;
+		var image = childSnapShot.val().image;
+		id= childSnapShot.key;
+
+		if(image == ""){
+			image = "images/user.png";
+		}
+		data += `<div class="col-md-10 col-sm-10">
+                        <div class="feature-left">
+							<span class="icon">
+								<a ><img class="imgcon" src="${image}" alt="image"></a>
+                               </span>
+							<div class="feature-copy">
+								<p>${name} &emsp; &emsp;&emsp;${email}</p>
+								<button class="delete" onclick="deleteFunction()">Delete User</button>
+                      		</div>
+						</div>
+                </div>`
+		}
+   );
+   document.getElementById("notify").innerHTML = data;
+}, function (error) {
+   console.log("Error: " + error.code);
+});
+}
+function deleteFunction(){
+	firebase.database().ref("/users/"+id).set(null);
+    window.alert("Delete Profile Successfully");
+}
+	</script>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Naiki</title>
+	<link rel="stylesheet" href="css/donation.css">
+</head>
+
+<body>
+	<div class="main">
+		<div class="container">
+			<img src="images/donor.jpg" alt="signup image" id="img" onclick="donor()">
+			<div class="bottom-left">Donor</div>
+			<img src="images/donee.jpg" alt="signup image" id="img" onclick="donee()">
+			<div class="bottom-right">Donee</div>
+		</div>
+	</div>
+	<script>
+		function donor() {
+			localStorage.setItem("userType", 'donor');
+			window.location.href = "login.html";
+		}
+		function donee() {
+			localStorage.setItem("userType", 'donee');
+			window.location.href = "login.html";
+		}
+	</script>
+</body>
+
+</html>
